@@ -11,7 +11,6 @@ protocol PhotosCollectionDelegate: AnyObject {
     func didTapImageInCell(_ image: UIImage?, frameImage: CGRect, indexPath: IndexPath)
 }
 
-
 class PhotosCollectionViewCell: UICollectionViewCell {
     
     private lazy var models: [UIImage] = Photos.getPhotos()

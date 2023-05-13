@@ -8,13 +8,18 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
- 
-
-    // MARK: - Properties
-    
+     
     var arrayPosts: [PostModel] = PostModel.getArray()
-    
-    let table: UITableView = UITableView(frame: .zero, style: .grouped)
+        
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
+        return tableView
+    }()
     
     let profileHeaderView = ProfileHeaderView()
     private var initialImageRect: CGRect = .zero
@@ -71,25 +76,20 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        table.delegate = self
-        table.dataSource = self
-        self.table.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
-        self.table.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
-        setupViews()
+        self.tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
+        self.tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
+        layout()
         
     }
     
-    // MARK: - Functions
-    
-    private func setupViews() {
-        view.addSubview(table)
-        table.backgroundColor = .lightGray
-        table.translatesAutoresizingMaskIntoConstraints = false
+    private func layout() {
+        view.addSubview(tableView)
+        
         NSLayoutConstraint.activate([
-            table.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            table.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            table.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            table.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
     
@@ -179,41 +179,28 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            tapPhotoAction()
-        } else {
-            tapPostAction(post: arrayPosts[indexPath.row], number: indexPath.row)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
+        switch indexPath.section {
+        case 0:
+            break
+        default:
+            _ = arrayPosts[indexPath.row]
+            let profilePostVC = ProfilePostViewController()
+            profilePostVC.setupCell(post: arrayPosts[indexPath.row])
+            navigationController?.pushViewController(profilePostVC, animated: true)
+            
+            arrayPosts[indexPath.row].views += 1
+            tableView.reloadData()
         }
     }
     
-    func tapPostAction(post: PostModel, number: Int) {
-        let controller = ProfilePostViewController()
-        controller.setupCell(post: post)
-        navigationController?.pushViewController(controller, animated: true)
-        arrayPosts[number].views += 1
-        table.reloadData()
-    }
 }
-
-extension ProfileViewController: PhotoTableViewCellDelegate {
-    func didTapImageCollection(_ image: UIImage?, frameImage: CGRect, indexPath: IndexPath) {
-        
-    }
-    
-    
-    func tapPhotoAction() {
-        navigationController?.pushViewController(PhotosViewController(), animated: true)
-    }
-    
-}
-
 
 extension ProfileViewController: ProfileHeaderViewDelegate {
     func didTapImage(_ image: UIImage?, imageRect: CGRect) {
         
         let rect = profileHeaderView.frame
-        let currentHeaderRect = table.convert(rect, to: view)
+        let currentHeaderRect = tableView.convert(rect, to: view)
         initialImageRect = CGRect(x: imageRect.origin.x,
                                   y: imageRect.origin.y + currentHeaderRect.origin.y,
                                   width: imageRect.width,
@@ -225,7 +212,6 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
 
 extension ProfileViewController: ProfileTableViewCellDelegate {
   
-
     func addLikes(index: Int) {
         arrayPosts[index].likes += 1
     }

@@ -80,6 +80,8 @@
 		04C6087B2A0E9C0E00361B04 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				04C608B82A0F642300361B04 /* Controllers  */,
+				04C608B72A0F641400361B04 /* Views */,
 				04C6087C2A0E9C0E00361B04 /* AppDelegate.swift */,
 				04C608A62A0EC4CE00361B04 /* PhotosTableViewCell.swift */,
 				04C608B22A0EF26000361B04 /* UIVie+Extetion.swift */,
@@ -93,14 +95,36 @@
 				04C608A42A0EC43700361B04 /* ProfilePostViewController.swift */,
 				04C608982A0E9EEC00361B04 /* PhotosViewController.swift */,
 				04C608AA2A0EC5B000361B04 /* PhotosCollectionViewCell.swift */,
-				04C6089C2A0EC22A00361B04 /* PostModel.swift */,
-				04C608B42A0EF38C00361B04 /* Photos.swift */,
-				04C608962A0E9EC800361B04 /* Post.swift */,
+				04C608B62A0F63EE00361B04 /* Models */,
 				04C608852A0E9C0F00361B04 /* Assets.xcassets */,
 				04C608872A0E9C0F00361B04 /* LaunchScreen.storyboard */,
 				04C6088A2A0E9C0F00361B04 /* Info.plist */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		04C608B62A0F63EE00361B04 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				04C6089C2A0EC22A00361B04 /* PostModel.swift */,
+				04C608B42A0EF38C00361B04 /* Photos.swift */,
+				04C608962A0E9EC800361B04 /* Post.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		04C608B72A0F641400361B04 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		04C608B82A0F642300361B04 /* Controllers  */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Controllers ";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

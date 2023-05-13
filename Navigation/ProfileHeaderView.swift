@@ -8,10 +8,8 @@
 import UIKit
     
 protocol ProfileHeaderViewDelegate: AnyObject {
-//    func tapAvatarImage(avatarImage: UIImage?)
     func didTapImage(_ image: UIImage?, imageRect: CGRect)
 }
-
 
 class ProfileHeaderView: UIView {
     

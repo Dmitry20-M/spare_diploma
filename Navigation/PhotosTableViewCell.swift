@@ -7,10 +7,6 @@
 
 import UIKit
     
-protocol PhotoTableViewCellDelegate: AnyObject {
-    func tapPhotoAction()
-}
-
 class PhotosTableViewCell: UITableViewCell {
 
     private lazy var models: [UIImage] = Photos.getPhotos()
