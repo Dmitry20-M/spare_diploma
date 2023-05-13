@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfilePostViewController: UIViewController {
+class DetailPost: UIViewController {
 
     private let authorText: UILabel = {
         let authorText = UILabel()

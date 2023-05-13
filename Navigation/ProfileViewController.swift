@@ -16,7 +16,7 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         return tableView
     }()
@@ -76,7 +76,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.identifier)
+        self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
         self.tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         layout()
         
@@ -140,7 +140,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
             cell.setupCell(model: arrayPosts[indexPath.row], index: indexPath.row)
             cell.delegate = self
             return cell
@@ -185,7 +185,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             break
         default:
             _ = arrayPosts[indexPath.row]
-            let profilePostVC = ProfilePostViewController()
+            let profilePostVC = DetailPost()
             profilePostVC.setupCell(post: arrayPosts[indexPath.row])
             navigationController?.pushViewController(profilePostVC, animated: true)
             

@@ -11,7 +11,7 @@ protocol ProfileTableViewCellDelegate: AnyObject {
     func addLikes(index: Int)
 }
 
-class ProfileTableViewCell: UITableViewCell {
+class PostTableViewCell: UITableViewCell {
 
     weak var delegate: ProfileTableViewCellDelegate?
     
