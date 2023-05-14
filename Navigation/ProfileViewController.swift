@@ -10,6 +10,8 @@ import UIKit
 class ProfileViewController: UIViewController {
      
     var arrayPosts: [PostModel] = PostModel.getArray()
+    let profileHeaderView = ProfileHeaderView()
+    private var initialImageRect: CGRect = .zero
         
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -20,24 +22,20 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         return tableView
     }()
-    
-    let profileHeaderView = ProfileHeaderView()
-    private var initialImageRect: CGRect = .zero
-    
+        
     private let whiteBackgroundView: UIView = {
           let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
           view.backgroundColor = .white
           view.alpha = 0.7
           return view
       }()
+    
+    private let animatingImageView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.clipsToBounds = true
+            return imageView
+        }()
 
-    
-    private let avatarImageView: UIImageView = {
-        let avatar = UIImageView()
-        return avatar
-    }()
-    
-    
     private func animateImageToInitial(rect: CGRect) {
             UIView.animate(withDuration: 0.6) {
                 self.animatingImageView.frame = rect
@@ -65,21 +63,24 @@ class ProfileViewController: UIViewController {
                 self.animatingImageView.layer.cornerRadius = UIScreen.main.bounds.width / 2
             }
         }
-
-
-        @objc func dismissKeyboard() {
-            view.endEditing(true)
-        }
-
     
-    // MARK: - Override
+    private lazy var crossButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: UIScreen.main.bounds.width - 66, y: 80, width: 50, height: 50))
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.backgroundColor = .black
+        button.addTarget(self, action: #selector(crossButtonAction), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func crossButtonAction() {
+        crossButton.removeFromSuperview()
+        whiteBackgroundView.removeFromSuperview()
+        animateImageToInitial(rect: initialImageRect)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
-        self.tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         layout()
-        
     }
     
     private func layout() {
@@ -92,36 +93,16 @@ class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-    
-    
-    private let animatingImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.clipsToBounds = true
-            return imageView
-        }()
 
-
-        private lazy var crossButton: UIButton = {
-            let button = UIButton(frame: CGRect(x: UIScreen.main.bounds.width - 66, y: 80, width: 50, height: 50))
-            button.setImage(UIImage(systemName: "xmark"), for: .normal)
-            button.backgroundColor = .black
-            button.addTarget(self, action: #selector(crossButtonAction), for: .touchUpInside)
-            return button
-        }()
-        
-        
-        @objc private func crossButtonAction() {
-            crossButton.removeFromSuperview()
-            whiteBackgroundView.removeFromSuperview()
-            animateImageToInitial(rect: initialImageRect)
-        }
-
-    
 }
 
-// MARK: - Extensions
-
-extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+// MARK: - UITableViewDataSource
+extension ProfileViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         switch section {
@@ -130,7 +111,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             return arrayPosts.count
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -156,7 +136,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
 
-
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         profileHeaderView.delegate = self
             return profileHeaderView
@@ -170,16 +149,15 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return 0
         }
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        2
-    }
-    
+}
+
+// MARK: - UITableViewDelegate
+extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
             break
@@ -193,9 +171,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.reloadData()
         }
     }
-    
 }
 
+// MARK: - ProfileHeaderViewDelegate
 extension ProfileViewController: ProfileHeaderViewDelegate {
     func didTapImage(_ image: UIImage?, imageRect: CGRect) {
         
@@ -210,6 +188,7 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
     }
 }
 
+// MARK: - ProfileTableViewCellDelegate
 extension ProfileViewController: ProfileTableViewCellDelegate {
   
     func addLikes(index: Int) {
