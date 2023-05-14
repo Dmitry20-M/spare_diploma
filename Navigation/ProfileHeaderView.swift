@@ -99,18 +99,17 @@ class ProfileHeaderView: UIView {
         textField.layer.add(animation, forKey: "position")
     }
     
-    func setupView() {
-            addSubview(titleRockMusic)
-            addSubview(statusLabel)
-            addSubview(statusTextField)
-            addSubview(setStatusButton)
-            addSubview(avatarImageView)
-
-        }
+    private func setGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(pushAvatarImage))
+        avatarImageView.addGestureRecognizer(recognizer)
+    }
+    
+    @objc func pushAvatarImage() {
+        delegate?.didTapImage(avatarImageView.image, imageRect: avatarImageView.frame)
+    }
         
         override init(frame: CGRect) {
             super.init(frame: .zero)
-            setupView()
             setupConstraints()
             setGestureRecognizer()
             backgroundColor = .systemGray4
@@ -120,8 +119,10 @@ class ProfileHeaderView: UIView {
             fatalError("init(coder:) has not been implemented")
         }
         
-
         func setupConstraints() {
+            
+            [titleRockMusic, statusLabel, statusTextField, setStatusButton, avatarImageView].forEach {
+                addSubview($0)}
             
             NSLayoutConstraint.activate([
                 avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -153,32 +154,4 @@ class ProfileHeaderView: UIView {
 
     }
 
-
-    
-    private func setGestureRecognizer() {
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(pushAvatarImage))
-        avatarImageView.addGestureRecognizer(recognizer)
-    }
-    
-    @objc func pushAvatarImage() {
-        print("Нажатие на картинку")
-//        delegate?.tapAvatarImage(avatarImage: avatarImageView.image)
-        delegate?.didTapImage(avatarImageView.image, imageRect: avatarImageView.frame)
-    }
-    
-    @objc func showStatus() {
-        if statusTextField.text?.isEmpty == false {
-            statusLabel.text = statusTextField.text
-            statusTextField.text = ""
-            statusLabel.textColor = .gray
-            statusTextField.layer.borderColor = UIColor.black.cgColor
-            statusTextField.layer.borderWidth = 1
-        }
-        else {
-            statusTextField.layer.borderColor = UIColor.red.cgColor
-            statusTextField.layer.borderWidth = 1.5
-            statusLabel.text = "Text is empty"
-            statusLabel.textColor = .red
-        }
-    }
 }

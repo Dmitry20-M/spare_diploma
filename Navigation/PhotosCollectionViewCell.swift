@@ -14,9 +14,7 @@ protocol PhotosCollectionDelegate: AnyObject {
 class PhotosCollectionViewCell: UICollectionViewCell {
     
     private lazy var models: [UIImage] = Photos.getPhotos()
-
     weak var delegate: PhotosCollectionDelegate?
-
     private var indexPathCell = IndexPath()
 
     let backgroundColorForTheCollection: UIView = {
