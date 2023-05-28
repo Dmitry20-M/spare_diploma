@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0417907B2A23CE4400E7D5D3 /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0417907A2A23CE4400E7D5D3 /* AnimationManager.swift */; };
 		04C6087D2A0E9C0E00361B04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6087C2A0E9C0E00361B04 /* AppDelegate.swift */; };
 		04C6087F2A0E9C0E00361B04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C6087E2A0E9C0E00361B04 /* SceneDelegate.swift */; };
 		04C608862A0E9C0F00361B04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C608852A0E9C0F00361B04 /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0417907A2A23CE4400E7D5D3 /* AnimationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
 		04C608792A0E9C0E00361B04 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04C6087C2A0E9C0E00361B04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04C6087E2A0E9C0E00361B04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041790792A23CE1700E7D5D3 /* Animate */ = {
+			isa = PBXGroup;
+			children = (
+				0417907A2A23CE4400E7D5D3 /* AnimationManager.swift */,
+			);
+			path = Animate;
+			sourceTree = "<group>";
+		};
 		04C608702A0E9C0E00361B04 = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +117,7 @@
 		04C608B72A0F641400361B04 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				041790792A23CE1700E7D5D3 /* Animate */,
 				04C608A62A0EC4CE00361B04 /* PhotosTableViewCell.swift */,
 				04C608AA2A0EC5B000361B04 /* PhotosCollectionViewCell.swift */,
 				04C608A22A0EC3D800361B04 /* PostTableViewCell.swift */,
@@ -238,6 +249,7 @@
 				04C608A32A0EC3D800361B04 /* PostTableViewCell.swift in Sources */,
 				04C608972A0E9EC800361B04 /* Post.swift in Sources */,
 				04C608AB2A0EC5B000361B04 /* PhotosCollectionViewCell.swift in Sources */,
+				0417907B2A23CE4400E7D5D3 /* AnimationManager.swift in Sources */,
 				04C608912A0E9CFB00361B04 /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
